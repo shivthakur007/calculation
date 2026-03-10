@@ -2,6 +2,27 @@ import ast
 import math
 import operator
 
+# Operators Mapping
+
+OPERATORS = {
+    ast.Add: operator.add,
+    ast.Sub: operator.sub,
+    ast.Mult: operator.mul,
+    ast.Div: operator.truediv,
+    ast.Mod: operator.mod,
+    ast.Pow: operator.pow
+}
+
+ALLOWED_FUNCTIONS = {
+    "sqrt": math.sqrt,
+    "sin": math.sin,
+    "cos": math.cos,
+    "tan": math.tan,
+    "log": math.log,
+    "exp": math.exp
+}
+
+
 def evaluate_expression(expression):
 
     expression = expression.strip()
