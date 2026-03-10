@@ -1,6 +1,6 @@
 import streamlit as st
 import streamlit as st
-from financial_functions import simple_interest, compound_interest, compound_value, present_value
+from finance_functions import simple_interest, compound_interest, compound_value, present_value
 from expression_evaluator import evaluate_expression
 
 
