@@ -17,7 +17,7 @@ st.sidebar.title("Calculators 🏦")
 
 calculator = st.sidebar.selectbox(
     "Choose Calculator",
-    ["Financial", "Simple", "Scientific"]
+    ["Financial", "Simple", "Scientific", "Statistical"]
 )
 
 if calculator == "Simple":
@@ -95,3 +95,11 @@ if calculator == "Financial":
             result = compound_value(pv, r, n)
             st.success(f"Future Value = {result}")
             
+if calculator == "Statistical":
+
+    st.title("Statistical Calculator")
+
+    select = st.selectbox(
+        "What do you want to know?",
+        ["Mean", "Median", "Mode", "Standard Deviation"]
+    )
