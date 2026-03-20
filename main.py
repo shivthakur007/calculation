@@ -97,9 +97,19 @@ if calculator == "Financial":
 
     elif select == "Sum of Present Value of Future Cashflows":
         
-        if st.button("Calculate", key="pv_cashflow_button":
-            result = pv_cashflows
-            st.success(f"Sum of Present Value of Future Cashflows = {result}")
+        st.subheader("Enter Cashflows")
+
+        # Default table
+        df = pd.DataFrame({
+            "Period": [1, 2, 3],
+            "Cashflow": [1000, 1000, 1000]
+        })
+        # Editable table
+        edited_df = st.data_editor(df, num_rows="dynamic")
+        rate = st.number_input("Enter Discount Rate (%)", value=10.0)
+        if st.button("Calculate"):
+            result = pv_cashflows(edited_df, rate)
+            st.success(f"Total Present Value = {result:.2f}")
             
 if calculator == "Statistical":
 
