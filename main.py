@@ -52,7 +52,7 @@ if calculator == "Financial":
 
     select = st.selectbox(
         "What do you want to know?",
-        ["Simple Interest", "Compound Interest", "Present Value", "Future Value"]
+        ["Simple Interest", "Compound Interest", "Present Value", "Future Value", "Sum of Present Value of Future Cashflows"]
     )
 
     if select == "Simple Interest":
@@ -94,6 +94,12 @@ if calculator == "Financial":
         if st.button("Calculate", key="fv_button"):
             result = compound_value(pv, r, n)
             st.success(f"Future Value = {result}")
+
+    elif select == "Sum of Present Value of Future Cashflows":
+        
+        if st.button("Calculate", key="pv_cashflow_button":
+            result = pv_cashflows
+            st.success(f"Sum of Present Value of Future Cashflows = {result}")
             
 if calculator == "Statistical":
 
