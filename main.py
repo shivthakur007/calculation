@@ -1,4 +1,4 @@
-import streamlit as st
+import pandas as pd
 import streamlit as st
 from finance_functions import simple_interest, compound_interest, compound_value, present_value
 from expression_evaluator import evaluate_expression
