@@ -15,9 +15,8 @@ def compound_interest(pv, r, n):
 
 def pv_cashflows(cashflows, rate):
     rate = rate / 100
-    pv_total = 0
-    for t, cf in cashflows:
-        pv = cf / (1 + rate) ** t
-        pv_total += pv
-
+    pv_total = sum(
+        row["Cashflow"] / (1 + rate) ** row["Period"]
+        for _, row in cashflows.iterrows()
+    )
     return pv_total
