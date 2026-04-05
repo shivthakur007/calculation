@@ -96,17 +96,14 @@ if calculator == "Financial":
             st.success(f"Future Value = {result}")
             
     elif select == "EMI":
-
         P = st.number_input("Loan Amount", key="emi_p")
-        r = st.number_input("Rate (%)", key="emi_r")
-        n = st.number_input("Time (years)", key="emi_n")
+        annual_rate = st.number_input("Rate (%)", key="emi_r")
+        years = st.number_input("Time (years)", key="emi_n")
     
         if st.button("Calculate", key="emi_button"):
-            r = r / 100 / 12        # convert % to monthly rate
-            n = n * 12              # convert years to months
-            result = calculate_emi(P, r, n)
+            result = calculate_emi(P, annual_rate, years)
             st.success(f"EMI = {round(result, 2)}")
-
+            
     elif select == "Sum of Present Value of Future Cashflows":
         
         st.subheader("Enter Cashflows")
