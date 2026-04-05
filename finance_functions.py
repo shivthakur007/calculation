@@ -22,12 +22,16 @@ def pv_cashflows(cashflows, rate):
     return pv_total
 
 def present_value_annuity(C, r, n):
-    PV = C * (1 - (1 + r) ** (-n)) / r
-    return PV
-
+    if r == 0:
+        return C * n
+    return C * (1 - (1 + r) ** (-n)) / r
+    
 def calculate_emi(P, annual_rate, years):
+    r = annual_rate / 100 / 12   # monthly rate
+    n = years * 12               # months
+
     if r == 0:
         return P / n
+
     EMI = P * r * (1 + r) ** n / ((1 + r) ** n - 1)
     return EMI
-
