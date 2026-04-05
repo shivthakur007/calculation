@@ -52,7 +52,7 @@ if calculator == "Financial":
 
     select = st.selectbox(
         "What do you want to know?",
-        ["Simple Interest", "Compound Interest", "Present Value", "Future Value", "Sum of Present Value of Future Cashflows"]
+        ["Simple Interest", "Compound Interest", "Present Value", "Future Value", "Sum of Present Value of Future Cashflows", "Present Value of Annuity", "EMI"]
     )
 
     if select == "Simple Interest":
