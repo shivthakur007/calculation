@@ -1,6 +1,6 @@
 import pandas as pd
 import streamlit as st
-from finance_functions import simple_interest, compound_interest, compound_value, present_value, pv_cashflows
+from finance_functions import simple_interest, compound_interest, compound_value, present_value, pv_cashflows, calculate_emi, present_value_annuity
 from expression_evaluator import evaluate_expression
 
 
