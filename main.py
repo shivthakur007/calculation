@@ -94,6 +94,18 @@ if calculator == "Financial":
         if st.button("Calculate", key="fv_button"):
             result = compound_value(pv, r, n)
             st.success(f"Future Value = {result}")
+            
+    elif select == "EMI":
+
+        P = st.number_input("Loan Amount", key="emi_p")
+        r = st.number_input("Rate (%)", key="emi_r")
+        n = st.number_input("Time (years)", key="emi_n")
+    
+        if st.button("Calculate", key="emi_button"):
+            r = r / 100 / 12        # convert % to monthly rate
+            n = n * 12              # convert years to months
+            result = calculate_emi(P, r, n)
+            st.success(f"EMI = {round(result, 2)}")
 
     elif select == "Sum of Present Value of Future Cashflows":
         
@@ -111,6 +123,17 @@ if calculator == "Financial":
             result = pv_cashflows(edited_df, rate)
             st.success(f"Total Present Value = {result:.2f}")
             
+    elif select == "Present Value of Annuity":
+        C = st.number_input("Cash Flow per Period", key="pva_c")
+        r = st.number_input("Rate (%)", key="pva_r")
+        n = st.number_input("Time (years)", key="pva_n")
+    
+        if st.button("Calculate", key="pva_button"):
+            r = r / 100 / 12        # monthly rate
+            n = n * 12              # months
+            result = present_value_annuity(C, r, n)
+            st.success(f"Present Value = {round(result, 2)}")
+                
 if calculator == "Statistical":
 
     st.title("Statistical Calculator")
