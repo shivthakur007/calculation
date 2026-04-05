@@ -52,7 +52,7 @@ if calculator == "Financial":
 
     select = st.selectbox(
         "What do you want to know?",
-        ["Simple Interest", "Compound Interest", "Present Value", "Future Value", "Sum of Present Value of Future Cashflows", "Present Value of Annuity", "EMI"]
+        ["Simple Interest", "Compound Interest", "Present Value", "Future Value", "Sum of Present Value of Future Cashflows", "Present Value of Annuity", "EMI", "Loan Amortisation"]
     )
 
     if select == "Simple Interest":
@@ -130,7 +130,54 @@ if calculator == "Financial":
             n = n * 12              # months
             result = present_value_annuity(C, r, n)
             st.success(f"Present Value = {round(result, 2)}")
-                
+    elif select == "Loan Amortization":
+
+        P = st.number_input("Loan Amount", key="amort_p")
+        annual_rate = st.number_input("Rate (%)", key="amort_r")
+        years = st.number_input("Time (years)", key="amort_n")
+    
+        if st.button("Generate Table", key="amort_button"):
+    
+            # Step 1: Calculate EMI using your function
+            emi = calculate_emi(P, annual_rate, years)
+    
+            # Step 2: Setup variables
+            r = annual_rate / 100 / 12
+            n = int(years * 12)
+            balance = P
+    
+            schedule = []
+    
+            # Step 3: Loop through each month
+            for month in range(1, n + 1):
+    
+                interest = balance * r
+                principal = emi - interest
+                balance -= principal
+    
+                # Avoid negative balance at end
+                if balance < 0:
+                    balance = 0
+    
+                schedule.append([
+                    month,
+                    round(emi, 2),
+                    round(principal, 2),
+                    round(interest, 2),
+                    round(balance, 2)
+                ])
+    
+            # Step 4: Display table
+            import pandas as pd
+            df = pd.DataFrame(schedule, columns=[
+                "Month", "EMI", "Principal", "Interest", "Balance"
+            ])
+    
+            st.dataframe(df)
+    
+            # Optional: show EMI
+            st.success(f"EMI = {round(emi, 2)}")
+                    
 if calculator == "Statistical":
 
     st.title("Statistical Calculator")
