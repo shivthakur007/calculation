@@ -36,13 +36,13 @@ def calculate_emi(P, annual_rate, years):
     EMI = P * r * (1 + r) ** n / ((1 + r) ** n - 1)
     return EMI
 
-def calculate_irr(price, cashflows):
-    low = 0.0
-    high = 1.0   # 100% upper bound
-    tolerance = 0.00001
+def calculate_irr_df(price, cashflows):
+    low = -90      # -90% (because your function expects %)
+    high = 200     # 200%
+    tolerance = 0.0001
     while high - low > tolerance:
         mid = (low + high) / 2
-        pv = present_value(cashflows, mid)
+        pv = pv_cashflows(cashflows, mid)
         if pv > price:
             low = mid
         else:
