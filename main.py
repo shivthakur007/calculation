@@ -1,6 +1,6 @@
 import pandas as pd
 import streamlit as st
-from finance_functions import simple_interest, compound_interest, compound_value, present_value, pv_cashflows, calculate_emi, present_value_annuity
+from finance_functions import simple_interest, compound_interest, compound_value, present_value, pv_cashflows, calculate_emi, present_value_annuity, 
 from expression_evaluator import evaluate_expression
 
 
@@ -52,7 +52,7 @@ if calculator == "Financial":
 
     select = st.selectbox(
         "What do you want to know?",
-        ["Simple Interest", "Compound Interest", "Present Value", "Future Value", "Sum of Present Value of Future Cashflows", "Present Value of Annuity", "EMI", "Loan Amortization"]
+        ["Simple Interest", "Compound Interest", "Present Value", "Future Value", "Sum of Present Value of Future Cashflows", "Present Value of Annuity", "EMI", "Loan Amortization","Internal Rate of Return (IRR)"]
     )
 
     if select == "Simple Interest":
@@ -130,8 +130,38 @@ if calculator == "Financial":
             n = n * 12              # months
             result = present_value_annuity(C, r, n)
             st.success(f"Present Value = {round(result, 2)}")
+            
+    elif select == "Internal Rate of Return (IRR)":
+        st.subheader("Enter Cashflows")
+        # Default table
+        df = pd.DataFrame({
+            "Period": [1, 2, 3],
+            "Cashflow": [50, 50, 1050]
+        })
+        # Editable table
+        edited_df = st.data_editor(df, num_rows="dynamic")
+        # Price input
+        price = st.number_input("Enter Initial Investment / Price (₹)", value=1100.0)
+        # -------------------------------
+        # Calculate
+        # -------------------------------
+        if st.button("Calculate IRR"):
+            # Extract cashflows as list
+            cashflows = edited_df["Cashflow"].tolist()
+            # Validation
+            if len(cashflows) == 0:
+                st.warning("⚠️ Please enter cashflows")
+            else:
+                irr = calculate_irr(price, cashflows)
+                st.success(f"📊 IRR / EIR = {irr * 100:.4f}%")
+                # Extra details (VERY IMPORTANT)
+                st.markdown("### 📌 Details")
+                st.write(f"Price: ₹ {price}")
+                st.write(f"Cashflows: {cashflows}")
+                st.write(f"Rate (decimal): {irr}")
+        
+    
     elif select == "Loan Amortization":
-
         P = st.number_input("Loan Amount", key="amort_p")
         annual_rate = st.number_input("Rate (%)", key="amort_r")
         years = st.number_input("Time (years)", key="amort_n")
