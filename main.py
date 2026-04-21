@@ -131,7 +131,7 @@ if calculator == "Financial":
             result = present_value_annuity(C, r, n)
             st.success(f"Present Value = {round(result, 2)}")
             
-    elif select == "IRR using Cashflow Table":
+    elif select == "Internal Rate of Return (IRR)":
         st.subheader("Enter Cashflows")
         df = pd.DataFrame({
             "Period": [1, 2, 3],
