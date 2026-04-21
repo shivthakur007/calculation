@@ -131,36 +131,25 @@ if calculator == "Financial":
             result = present_value_annuity(C, r, n)
             st.success(f"Present Value = {round(result, 2)}")
             
-    elif select == "Internal Rate of Return (IRR)":
+    elif select == "IRR using Cashflow Table":
         st.subheader("Enter Cashflows")
-        # Default table
         df = pd.DataFrame({
             "Period": [1, 2, 3],
             "Cashflow": [50, 50, 1050]
         })
-        # Editable table
         edited_df = st.data_editor(df, num_rows="dynamic")
-        # Price input
-        price = st.number_input("Enter Initial Investment / Price (₹)", value=1100.0)
-        # -------------------------------
-        # Calculate
-        # -------------------------------
+        price = st.number_input("Enter Price / Investment (₹)", value=1100.0)
         if st.button("Calculate IRR"):
-            # Extract cashflows as list
-            cashflows = edited_df["Cashflow"].tolist()
-            # Validation
-            if len(cashflows) == 0:
-                st.warning("⚠️ Please enter cashflows")
-            else:
-                irr = calculate_irr(price, cashflows)
-                st.success(f"📊 IRR / EIR = {irr * 100:.4f}%")
-                # Extra details (VERY IMPORTANT)
-                st.markdown("### 📌 Details")
-                st.write(f"Price: ₹ {price}")
-                st.write(f"Cashflows: {cashflows}")
-                st.write(f"Rate (decimal): {irr}")
-        
-    
+            # Sort by period (VERY IMPORTANT)
+            edited_df = edited_df.sort_values(by="Period")
+            irr = calculate_irr_df(price, edited_df)
+            st.success(f"📊 IRR / EIR = {irr:.4f}%")
+            # Extra insight
+            st.markdown("### 📌 Details")
+            st.write(f"Price: ₹ {price}")
+            st.write(f"Cashflows Table:")
+            st.dataframe(edited_df)  
+            
     elif select == "Loan Amortization":
         P = st.number_input("Loan Amount", key="amort_p")
         annual_rate = st.number_input("Rate (%)", key="amort_r")
